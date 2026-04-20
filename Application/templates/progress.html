@@ -1,0 +1,57 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Disease Progress - DentalAI</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://kit.fontawesome.com/a2d9d5f122.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  {% include 'navbar.html' %}
+  <div class="container py-5">
+    <h2 class="text-center mb-4 text-primary">
+      <i class="fas fa-chart-line me-2"></i> Disease Progress Overview
+    </h2>
+
+    {% if records %}
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="mb-3 text-primary">Progress Summary</h5>
+          {% for cls, status in tracking_summary.items() %}
+            <div class="d-flex justify-content-between border-bottom py-2">
+              <strong>{{ cls }}</strong>
+              <span>{{ status }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="row">
+        {% for rec in records %}
+          <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+              <img src="{{ rec.image }}" class="card-img-top" alt="Scan Image">
+              <div class="card-body">
+                <p class="text-muted mb-1">
+                  <i class="far fa-calendar-alt me-1"></i>{{ rec.date.strftime('%d %b %Y, %I:%M %p') }}
+                </p>
+                {% for d in rec.detections %}
+                  <div><strong class="text-primary">{{ d.class }}</strong> - Area: {{ d.area }}</div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-center text-muted mt-4">No previous scans found. Upload an image to begin tracking.</p>
+    {% endif %}
+  </div>
+</body>
+</html> 
+
+

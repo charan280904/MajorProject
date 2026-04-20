@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🦷 DentalAI - Oral Health Scanner</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+  
+  <nav class="navbar">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index') }}">
+        <i class="fas fa-tooth"></i> DentalAI
+      </a>
+
+      <div class="ms-auto d-flex align-items-center">
+        <a href="{{ url_for('progress') }}" class="nav-link text-white me-3">Progress</a>
+        <a href="{{ url_for('rec_page') }}" class="nav-link text-white me-3">Recommendations</a>
+
+        <a href="{{ url_for('lifestyle') }}" class="nav-link">Lifestyle Details</a>
+
+        {% if current_user.is_authenticated %}
+          <span class="text-white me-3">Hi, {{ current_user.name }} 👋</span>
+          <a href="{{ url_for('logout') }}" class="btn btn-light">
+            <i class="fas fa-sign-out-alt me-2"></i>Logout
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="hero shadow-sm">
+
+          <h1 class="display-5 fw-bold text-primary">
+            <i class="fas fa-tooth me-2"></i>
+            Personalized Dental Care Using Deep Learning
+          </h1>
+
+          <p class="lead text-muted">
+            Upload a photo of your teeth, and our AI will detect conditions such as 
+            <b>Caries, Calculus, Gingivitis, Tooth Discoloration, Ulcers</b> and 
+            <b>Hypodontia</b>. Get personalized care recommendations and track your oral health over time.
+          </p>
+
+          {% if current_user.is_authenticated %}
+          
+          <div class="mt-4">
+            <form action="{{ url_for('analyze') }}" method="POST" enctype="multipart/form-data">
+              <div class="input-group mb-3">
+                <input type="file" name="file" class="form-control" accept="image/*" required>
+                <button type="submit" class="upload-btn px-4">
+                  <i class="fas fa-upload me-2"></i>Scan My Teeth
+                </button>
+              </div>
+            </form>
+          </div>
+          {% else %}
+          <div class="mt-4">
+            <a href="{{ url_for('login') }}" class="btn-success px-4">
+              <i class="fas fa-user me-2"></i>Login to Start Scanning
+            </a>
+          </div>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <small>&copy; 2025 DentalAI | Smart Oral Health</small>
+  </footer>
+
+</body>
+</html>
+
+<!-- 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🦷 DentalAI - Oral Health Scanner</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index') }}">
+        <i class="fas fa-tooth"></i> DentalAI
+      </a>
+
+      <div class="ms-auto d-flex align-items-center">
+        <a href="{{ url_for('progress') }}" class="nav-link text-white me-3">Progress</a>
+        <a href="{{ url_for('rec_page') }}" class="nav-link text-white me-3">Recommendations</a>
+        <a href="{{ url_for('lifestyle') }}" class="nav-link text-white me-3">Lifestyle Details</a>
+
+        {% if current_user.is_authenticated %}
+          <span class="text-white me-3">Hi, {{ current_user.name }} 👋</span>
+          <a href="{{ url_for('logout') }}" class="btn btn-light">
+            <i class="fas fa-sign-out-alt me-2"></i>Logout
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="hero shadow-sm">
+
+          <h1 class="display-5 fw-bold text-primary">
+            <i class="fas fa-tooth me-2"></i>
+            Personalized Dental Care Using Deep Learning
+          </h1>
+
+          <p class="lead text-muted">
+            Upload a photo of your teeth, and our AI will detect conditions such as 
+            <b>Caries, Calculus, Gingivitis, Tooth Discoloration, Ulcers</b> and 
+            <b>Hypodontia</b>. Get personalized care recommendations and track your oral health over time.
+          </p>
+
+          {% if current_user.is_authenticated %}
+
+          <div class="mt-4">
+            <form action="{{ url_for('analyze') }}" method="POST" enctype="multipart/form-data">
+              <div class="input-group mb-3">
+                <input type="file" name="file" class="form-control" accept="image/*" required>
+                <button type="submit" class="upload-btn px-4">
+                  <i class="fas fa-upload me-2"></i>Scan My Teeth
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="text-center mt-3">
+            <a href="{{ url_for('rec_page') }}" class="upload-btn px-4">
+              🧠 View Recommendations
+            </a>
+          </div>
+
+          {% else %}
+          <div class="mt-4">
+            <a href="{{ url_for('login') }}" class="btn-success px-4">
+              <i class="fas fa-user me-2"></i>Login to Start Scanning
+            </a>
+          </div>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <small>&copy; 2025 DentalAI | Smart Oral Health</small>
+  </footer>
+
+</body>
+</html> -->

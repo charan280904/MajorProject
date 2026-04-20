@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Dental Report</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="{{ url_for('index') }}" class="navbar-brand">🦷 DentalAI</a>
+  </div>
+</nav>
+
+<div class="container py-5">
+
+  <!-- TITLE -->
+  <div class="text-center mb-5">
+    <h1 class="text-primary">AI Personalized Dental Report</h1>
+    <p class="text-muted">Based on your scan + lifestyle data</p>
+  </div>
+
+  <!-- CONDITIONS -->
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">🧠 Detected Conditions</h3>
+      {% for c in conditions %}
+        <span class="badge bg-danger">{{ c }}</span>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- RISK -->
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">⚠️ Risk Summary</h3>
+      <p>{{ risk }}</p>
+    </div>
+  </div>
+
+  <!-- RECOMMENDATIONS -->
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">🦷 Personalized Recommendations</h3>
+      <ul>
+        {% for rec in recommendations %}
+          <li>{{ rec }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <!-- DAILY ROUTINE -->
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">🕒 Daily Routine</h3>
+
+      <div class="timeline-item">
+        <b>Morning:</b>
+        <ul>
+          {% for r in routine.morning %}
+            <li>{{ r }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <b>Afternoon:</b>
+        <ul>
+          {% for r in routine.afternoon %}
+            <li>{{ r }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <b>Night:</b>
+        <ul>
+          {% for r in routine.night %}
+            <li>{{ r }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TREATMENT -->
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">💊 Suggested Treatments</h3>
+      <ul>
+        {% for t in treatment %}
+          <li>{{ t }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

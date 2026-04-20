@@ -1,0 +1,102 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🩺 Scan Results - DentalAI</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index') }}">
+        <i class="fas fa-tooth"></i>DentalAI
+      </a>
+      <div class="ms-auto">
+        {% if current_user.is_authenticated %}
+          <span class="text-white">Hi, {{ current_user.name }} 👋</span>
+          <a href="{{ url_for('logout') }}" class="btn btn-light">
+            <i class="fas fa-sign-out-alt me-2"></i>Logout
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+
+        <div class="text-center mb-4">
+          <h1 class="display-6 fw-bold text-success">
+            <i class="fas fa-tooth me-2"></i> Scan Complete!
+          </h1>
+        </div>
+
+        <div class="text-center mb-5">
+          <img src="{{ user_image }}" class="result-img" alt="AI Detection Result" />
+        </div>
+
+        <h3 class="mb-4 text-center">🦷 Your Personalized Dental Care Routine</h3>
+        {% for d in detections %}
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <h4 class="card-title">
+                {{ d.class|title }}
+              </h4>
+              <span class="text-muted small">Affected Area: {{ "%.2f"|format(d.area) }}</span>
+            </div>
+
+            <div class="ps-3">
+              {% for tip in d.advice %}
+              <div class="timeline-item mb-3">
+                <span class="badge bg-primary">{{ tip.time }}</span>
+                <p class="d-inline">{{ tip.tip }}</p>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+        <div class="card mt-5 shadow-sm border-success">
+          <div class="card-body">
+            <h4 class="text-success mb-4">
+              <i class="fas fa-chart-line me-2"></i> Disease Progress Comparison
+            </h4>
+
+            {% if tracking_summary %}
+              {% for cls, status in tracking_summary.items() %}
+                <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                  <strong>{{ cls }}</strong>
+                  <span>{{ status }}</span>
+                </div>
+              {% endfor %}
+            {% else %}
+              <p class="text-muted text-center">No previous records to compare.</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="text-center mt-5">
+          <a href="{{ url_for('index') }}" class="back-btn px-4">
+            <i class="fas fa-arrow-left me-2"></i> Scan Another Photo
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <small>&copy; 2025 DentalAI | Smart Oral Health Powered by Deep Learning</small>
+  </footer>
+</body>
+</html>

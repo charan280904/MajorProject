@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="{{ url_for('index') }}">
+      <i class="fas fa-tooth me-2"></i>DentalAI
+    </a>
+
+    <div class="ms-auto d-flex align-items-center">
+      <a href="{{ url_for('progress') }}" class="nav-link text-white me-3">Progress</a>
+      <a href="{{ url_for('rec_page') }}" class="nav-link text-white me-3">Recommendations</a>
+
+      {% if current_user.is_authenticated %}
+        <span class="text-white me-3">Hi, {{ current_user.name }} 👋</span>
+        <a href="{{ url_for('logout') }}" class="btn btn-light">
+          <i class="fas fa-sign-out-alt me-2"></i>Logout
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<!-- <nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="{{ url_for('index') }}">
+      <i class="fas fa-tooth me-2"></i>DentalAI
+    </a>
+
+    <div class="ms-auto d-flex align-items-center">
+      <a href="{{ url_for('progress') }}" class="nav-link text-white me-3">Progress</a>
+      <a href="{{ url_for('rec_page') }}" class="nav-link text-white me-3">Recommendations</a>
+      
+      
+      <a href="{{ url_for('user_notifications') }}" class="nav-link text-white me-3 position-relative">
+        Notifications
+        {% if unread_count > 0 %}
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          {{ unread_count }}
+          <span class="visually-hidden">unread notifications</span>
+        </span>
+        {% endif %}
+      </a>
+
+      {% if current_user.is_authenticated %}
+        <span class="text-white me-3">Hi, {{ current_user.name }} 👋</span>
+        <a href="{{ url_for('logout') }}" class="btn btn-light">
+          <i class="fas fa-sign-out-alt me-2"></i>Logout
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+
+ -->

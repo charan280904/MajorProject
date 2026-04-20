@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lifestyle Details</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a class="navbar-brand" href="{{ url_for('index') }}">
+      🦷 DentalAI
+    </a>
+  </div>
+</nav>
+
+{% if lifestyle %}
+<div class="container mt-4">
+  <div class="alert alert-success">
+    Thanks! Your lifestyle data helps us give better dental insights 🦷
+  </div>
+
+  <div class="text-center mt-3">
+    <button onclick="showForm()" class="btn btn-light">
+      Update Details
+    </button>
+  </div>
+</div>
+{% endif %}
+
+<div class="lifestyle-container" id="formSection"
+     {% if lifestyle %}style="display:none;"{% endif %}>
+
+<form method="POST" action="{{ url_for('save_lifestyle') }}">
+
+<!-- Age -->
+<div class="lifestyle-card">
+  <h3>What is your age?</h3>
+  {% for val in ["18-24","25-30","31-40","40+"] %}
+  <label class="option-box">
+    <input type="radio" name="age" value="{{val}}"
+    {% if lifestyle and lifestyle.age == val %}checked{% endif %}>
+    {{val}}
+  </label>
+  {% endfor %}
+</div>
+
+<!-- Person -->
+<div class="lifestyle-card">
+  <h3>Who is this test for?</h3>
+  {% for val in ["self","child","parent"] %}
+  <label class="option-box">
+    <input type="radio" name="person" value="{{val}}"
+    {% if lifestyle and lifestyle.person == val %}checked{% endif %}>
+    {{val.capitalize()}}
+  </label>
+  {% endfor %}
+</div>
+
+<!-- Brush -->
+<div class="lifestyle-card">
+  <h3>How many times do you brush daily?</h3>
+  {% for val in ["once","twice"] %}
+  <label class="option-box">
+    <input type="radio" name="brush" value="{{val}}"
+    {% if lifestyle and lifestyle.brush == val %}checked{% endif %}>
+    {{val.capitalize()}}
+  </label>
+  {% endfor %}
+</div>
+
+<!-- Food -->
+<div class="lifestyle-card">
+  <h3>What do you consume more than twice a day?</h3>
+  {% for val,label in [("tea","Tea/Coffee"),("sweets","Sweets"),("softdrinks","Soft Drinks"),("snacks","Snacks"),("None","None of the above")] %}
+  <label class="option-box">
+    <input type="checkbox" name="food" value="{{val}}"
+    {% if lifestyle and val in lifestyle.food %}checked{% endif %}>
+    {{label}}
+  </label>
+  {% endfor %}
+</div>
+
+<!-- Tobacco -->
+<div class="lifestyle-card">
+  <h3>Do you use tobacco?</h3>
+  {% for val,label in [("yes","Yes"),("no","No"),("before","Used before")] %}
+  <label class="option-box">
+    <input type="radio" name="tobacco" value="{{val}}"
+    {% if lifestyle and lifestyle.tobacco == val %}checked{% endif %}>
+    {{label}}
+  </label>
+  {% endfor %}
+</div>
+
+<!-- Issues -->
+<div class="lifestyle-card">
+  <h3>Oral Health Issues</h3>
+  {% for val,label in [("pain","Tooth Pain"),("cavity","Cavities"),("sensitivity","Sensitivity"),("gums","Bleeding Gums"),("None","None of the above")] %}
+  <label class="option-box">
+    <input type="checkbox" name="issues" value="{{val}}"
+    {% if lifestyle and val in lifestyle.issues %}checked{% endif %}>
+    {{label}}
+  </label>
+  {% endfor %}
+</div>
+
+<!-- Diabetes -->
+<div class="lifestyle-card">
+  <h3>Do you have diabetes?</h3>
+  {% for val,label in [("yes","Yes"),("no","No"),("unknown","Don't know")] %}
+  <label class="option-box">
+    <input type="radio" name="diabetes" value="{{val}}"
+    {% if lifestyle and lifestyle.diabetes == val %}checked{% endif %}>
+    {{label}}
+  </label>
+  {% endfor %}
+</div>
+
+<!-- Visit -->
+<div class="lifestyle-card">
+  <h3>How often do you visit a dentist?</h3>
+  {% for val,label in [("never","Rarely"),("year","Once a year"),("6months","Every 6 months")] %}
+  <label class="option-box">
+    <input type="radio" name="visit" value="{{val}}"
+    {% if lifestyle and lifestyle.visit == val %}checked{% endif %}>
+    {{label}}
+  </label>
+  {% endfor %}
+</div>
+
+<button class="submit-btn">Save Details</button>
+
+</form>
+</div>
+
+<script>
+function showForm() {
+  document.getElementById("formSection").style.display = "block";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Dental Report</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+  <div class="container-fluid">
+    <a href="{{ url_for('index') }}" class="navbar-brand">🦷 DentalAI</a>
+  </div>
+</nav>
+
+<div class="dashboard-container">
+
+{% if report %}
+
+<h1 class="dashboard-title">🧠 AI Dental Report</h1>
+
+<!-- 🔝 TOP ROW -->
+<div class="top-grid">
+
+  <!-- RISK -->
+  <div class="dash-card">
+    <h3>⚠️ Risk Score</h3>
+    <div class="risk-value risk-{{ report.risk|lower }}">
+      {{ report.risk }}
+    </div>
+
+    <div class="risk-bar">
+      <div class="risk-fill risk-{{ report.risk|lower }}"></div>
+    </div>
+  </div>
+
+  <!-- CONDITIONS -->
+  <div class="dash-card">
+    <h3>🧠 Detected Conditions</h3>
+    <div class="conditions-list">
+      {% for c in conditions %}
+        <span class="condition-chip">{{ c }}</span>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- TREATMENTS -->
+  <div class="dash-card">
+    <h3>💊 Treatments</h3>
+    <ul>
+      {% for t in report.treatment %}
+        <li>{{ t }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+</div>
+
+<!-- 🔽 BOTTOM -->
+<div class="bottom-grid">
+
+  <!-- RECOMMENDATIONS -->
+  <div class="dash-card">
+    <h3>🦷 Recommendations</h3>
+    <ul class="big-text">
+      {% for r in report.recommendations %}
+        <li>{{ r }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- ROUTINE -->
+  <div class="dash-card">
+    <h3>🕒 Daily Routine</h3>
+
+    <div class="routine-item">
+      <b>🌅 Morning</b>
+      <ul>
+        {% for r in report.routine.morning %}
+          <li>{{ r }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="routine-item">
+      <b>🌤 Afternoon</b>
+      <ul>
+        {% for r in report.routine.afternoon %}
+          <li>{{ r }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="routine-item">
+      <b>🌙 Night</b>
+      <ul>
+        {% for r in report.routine.night %}
+          <li>{{ r }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- BUTTON -->
+<div class="center-btn">
+  <a href="{{ url_for('generate_report') }}" class="upload-btn">
+    🔄 Regenerate Recommendations
+  </a>
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>
